@@ -1,9 +1,0 @@
-fastapi
-uvicorn[standard]
-bcrypt
-psycopg2-binary    
-sqlalchemy         
-python-multipart 
-passlib[bcrypt]     
-redis              
-hashlib

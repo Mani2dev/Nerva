@@ -4,7 +4,22 @@
         "**/.svn": true,
         "**/.hg": true,
         "**/.DS_Store": true,
-        "**/Thumbs.db": true
+        "**/Thumbs.db": true,
+        "backend/server/routers/__pycache__": true,
+        "backend/server/__pycache__": true,
+        "panel/.vscode": true,
+        "panel/node_modules": true,
+        "panel/package-lock.json": true,
+        "panel/package.json": true,
+        ".vscode": true
     },
-    "hide-files.files": []
+    "hide-files.files": [
+        "backend/server/routers/__pycache__",
+        "backend/server/__pycache__",
+        "panel/.vscode",
+        "panel/node_modules",
+        "panel/package-lock.json",
+        "panel/package.json",
+        ".vscode"
+    ]
 }

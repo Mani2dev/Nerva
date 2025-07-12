@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+
+* {
+    font-family: "Inter", sans-serif !important;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+:root {
+  /* ===== Scheme Colors ===== */
+  --color-bg: #f0f2f4; 
+  --color-surface: #ffffff;       /* Panels/cards */
+  --color-shadow: #e5e7e9;            /* Shadow */
+  --color-input-bg: #dddddd;      /* Inputs/textarea */
+  --color-button-bg: #517cb4;     /* Primary button */
+  --color-text: #000000;  
+  --color-white: #fff;
+  --color-muted: #94a3b8;         /* Secondary text */
+  --color-accent: #0ea5e9;        /* Accent */
+  --color-danger: #ef4444;        /* Alerts/errors */
+
+  /* ===== Borders ===== */
+  --border-color: #d4d4d4;        /* Base border for inputs/cards */
+  --border-radius: 0.5rem;        /* Rounded corners */
+  --border-width: 1px;            /* Default thickness */
+
+  /* ===== Font Sizes ===== */
+  --font-xs: 0.75rem;   
+  --font-sm: 0.875rem;  
+  --font-nm: 1rem;
+  --font-md: 1.8rem;   
+  --font-lg: 3.25rem;   
+  --font-xl: 1.5rem;    
+  --font-2xl: 2rem;     
+}
+
+html {
+    scroll-behavior: smooth;
+}
+::-webkit-scrollbar {
+    display: none;
+}
+body {
+    background: var(--color-bg);
+    color: var(--color-text);
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+input, textarea, button {
+    outline: none;
+    border: none;
+    width: 100%;
+}
+p, a, label, ::placeholder, input, textarea, button {
+    font-size: var(--font-nm);
+    color: var(--color-text);
+}
