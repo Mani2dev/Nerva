@@ -1,22 +1,41 @@
 ./
 ├── LICENSE
+├── README.md
 ├── backend/
-│   ├── server/
-│   │   ├── Dockerfile
-│   │   ├── db/
-│   │   │   ├── datapase.py
-│   │   │   └── models.py
-│   │   ├── requirements.txt
-│   │   ├── routers/
-│   │   │   ├── auth.py
-│   │   │   └── docker.py
-│   │   ├── security/
-│   │   │   ├── phrases.txt
-│   │   │   └── token.py
-│   │   └── server.py
-│   └── venv/
-├── panel/
+│   ├── 2fa/
+│   │   ├── 2fa.js
+│   │   ├── codegen.js
+│   │   ├── crypto.js
+│   │   └── db_store.js
 │   ├── Dockerfile
+│   ├── auth/
+│   │   └── auth.js
+│   ├── docker/
+│   │   ├── containers.js
+│   │   ├── docker.js
+│   │   └── spawner.js
+│   ├── docker-compose.yml
+│   ├── factorio/
+│   │   ├── phrase.txt
+│   │   └── token.js
+│   ├── memory/
+│   │   ├── heap.js
+│   │   └── manager.js
+│   ├── package.json
+│   ├── routers/
+│   │   ├── auth.js
+│   │   ├── containers.js
+│   │   ├── honeypots.js
+│   │   ├── index.js
+│   │   ├── network.js
+│   │   └── settings/
+│   │       ├── settings.js
+│   │       ├── user.js
+│   │       └── webhooks.js
+│   └── server.js
+├── frontend/
+│   ├── Dockerfile
+│   ├── docker-compose.yml
 │   ├── index.html
 │   ├── package-lock.json
 │   ├── package.json
@@ -37,8 +56,13 @@
 │   │   │   └── global/
 │   │   │       └── Sidebar.vue
 │   │   ├── main.js
+│   │   ├── security/
+│   │   │   ├── Auth.js
+│   │   │   ├── GetAuthToken.js
+│   │   │   └── SetCookie.js
 │   │   └── views/
 │   │       ├── Auth.vue
-│   │       └── Index.vue
+│   │       ├── Index.vue
+│   │       └── NotFound.vue
 │   └── vite.config.js
 └── treex.md
