@@ -1,8 +1,8 @@
-# Barnacle
+# Segment-42
 
 Trap. Monitor. Analyze. Evolve.
 
-Barnacle is a modular honeypot farm and system orchestration suite. It’s designed for security enthusiasts and operators who want to go beyond simple traps — Barnacle aims to provide real-world deployment, full observability, and integrated security controls on modern Linux hosts.
+Segment-42 is a modular honeypot farm and system orchestration suite. It’s designed for security enthusiasts and operators who want to go beyond simple traps — Segment-42 aims to provide real-world deployment, full observability, and integrated security controls on modern Linux hosts.
 
 ---
 
@@ -25,7 +25,7 @@ Barnacle is a modular honeypot farm and system orchestration suite. It’s desig
 
 ## Overview
 
-Barnacle is a honeypot orchestration framework that deploys multiple isolated traps in containers, collects logs, tracks suspicious activity, and exposes an operator dashboard for full control. Beyond honeypots, Barnacle also monitors system resources, manages services, and integrates role-based security controls.
+Segment-42 is a honeypot orchestration framework that deploys multiple isolated traps in containers, collects logs, tracks suspicious activity, and exposes an operator dashboard for full control. Beyond honeypots, Segment-42 also monitors system resources, manages services, and integrates role-based security controls.
 
 The long-term goal: real-time threat capture, live system forensics, and AI-assisted log analysis — all controlled through a secure, user-friendly interface.
 
@@ -207,8 +207,8 @@ Future expansions are already mapped out:
 
 1. Clone the repository:
    \`\`\`bash
-   git clone https://github.com/yourusername/barnacle.git
-   cd barnacle
+   git clone https://github.com/yourusername/Segment-42.git
+   cd Segment-42
    \`\`\`
 
 2. Build and start containers:
