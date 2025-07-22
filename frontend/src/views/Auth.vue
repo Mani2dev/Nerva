@@ -74,7 +74,7 @@
         position: relative;
         width: 45%;
         padding: 20px;
-        border-radius: 10px;
+        border-radius: 0;
         height: 45%;
         box-shadow: 0 0 10px var(--color-shadow);
         background: var(--color-surface);

@@ -1,141 +1,157 @@
-# 🍯 Vue + FastAPI Honeypot Farm
+# Barnacle
 
-**Trap. Study. Adapt. Automate.**  
-A real-world honeypot farm orchestration framework for folks who want to do more than just *play security* — built with real tools, real risks, real learning.
+Trap. Monitor. Analyze. Evolve.
+
+Barnacle is a modular honeypot farm and system orchestration suite. It’s designed for security enthusiasts and operators who want to go beyond simple traps — Barnacle aims to provide real-world deployment, full observability, and integrated security controls on modern Linux hosts.
 
 ---
 
-## 📚 Table of Contents
+## Table of Contents
 
 - [Overview](#overview)
-- [Core Features](#core-features)
+- [Key Features](#key-features)
 - [Planned Enhancements](#planned-enhancements)
 - [System Architecture](#system-architecture)
 - [Tech Stack](#tech-stack)
 - [Directory Structure](#directory-structure)
-- [Security Notes](#security-notes)
+- [Security Model](#security-model)
 - [Setup](#setup)
 - [Usage](#usage)
-- [Role-Based Access](#role-based-access)
-- [Operational Best Practices](#operational-best-practices)
-- [Roadmap](#roadmap)
-- [Contributing](#contributing)
+- [Access Control](#access-control)
+- [Operational Guidelines](#operational-guidelines)
 - [License](#license)
 
 ---
 
-## 🧩 Overview
+## Overview
 
-This is a **multi-container honeypot farm**, built for:
-- **Deploying traps** that mimic real services
-- **Orchestrating containers** through FastAPI + Docker SDK
-- **Monitoring suspicious traffic**
-- **Centralizing logs** for threat intel and forensics
-- **Managing everything** through a secure Vue dashboard
+Barnacle is a honeypot orchestration framework that deploys multiple isolated traps in containers, collects logs, tracks suspicious activity, and exposes an operator dashboard for full control. Beyond honeypots, Barnacle also monitors system resources, manages services, and integrates role-based security controls.
 
-All containers are isolated, logs are centralized, network activity is traceable — and you stay in control with **custom token auth** and your own **RBAC** rules.
+The long-term goal: real-time threat capture, live system forensics, and AI-assisted log analysis — all controlled through a secure, user-friendly interface.
 
 ---
 
-## ⚙️ Core Features
+## Key Features
 
-✅ **Vue 3 Frontend** with Vue Router + Pinia  
-✅ **FastAPI Backend** with your own custom token-based auth system (no JWT fad hype)  
-✅ **PostgreSQL** for user sessions, tokens, RBAC configs, honeypot metadata  
-✅ **Docker SDK** — you’re not just `docker-compose`-ing, you’re programmatically managing traps  
-✅ **Centralized Logging** — shared volume or plug into Loki/Promtail/ELK later  
-✅ **Web UI Controls** — spawn, kill, inspect, monitor containers  
-✅ **Firewall Rules** — block IPs and tweak network rules from the panel (handle with care)  
-✅ **Host Tool Installer** — deploy nginx, fail2ban, or other essentials directly (highly privileged ops, so isolate carefully)  
-✅ **Custom RBAC** — fine-grained roles for devs, devops, admins, and cybersec researchers
+Current core capabilities include:
 
----
-
-## 🚧 Planned Enhancements
-
-- Kubernetes orchestration layer
-- Terraform IAC for spinning up infra consistently
-- CI/CD pipelines for safe deployments (GitHub Actions, GitLab CI, etc.)
-- Logging upgrade — fully integrated Loki or ELK
-- Webhooks for Discord/Slack/Matrix alerts
-- Zero-trust privileged agent for firewall/package ops
-- Audit logging for every admin action
-- Dark mode (non-negotiable)
+- Honeypot Spawner — Deploy and manage multiple honeypots in isolated containers.
+- Container Orchestration — Full Docker management via programmatic API.
+- Resource Monitoring — Observe CPU, RAM, and network traffic in real time.
+- Custom Authentication — Custom token system and two-factor authentication.
+- Role-Based Access Control (RBAC) — Define granular user roles and permissions.
+- Multi-User Support — Manage multiple operators with unique credentials.
+- Integrated Logging — Centralized log storage for honeypot activity.
+- Frontend Dashboard — Vue-based SPA for easy container management and monitoring.
+- Service Management — Manage host services (FTP, SSH, cron) primarily for Linux.
+- Pluggable AI Analysis — Framework for integrating models like ChatGPT or Gemini for log parsing.
 
 ---
 
-## 🏗️ System Architecture
+## Planned Enhancements
 
-```plaintext
+Future expansions are already mapped out:
+
+- Kubernetes orchestration layer for large-scale deployment.
+- Integrated digital forensics tools for live evidence collection.
+- CI/CD pipelines for safer updates and rollback.
+- Infrastructure-as-Code modules (Terraform).
+- Improved system hardening profiles.
+- Alert hooks for Discord, Slack, Matrix.
+- Advanced audit logging for user actions.
+- Dedicated zero-trust agent for privileged host operations.
+- Dark mode (non-negotiable).
+
+---
+
+## System Architecture
+
+\`\`\`plaintext
 +-------------------------------+
-|     Vue 3 Frontend Panel      |
-|  (Vue Router + Pinia + Vite)  |
-+---------------+---------------+
-                |
-+---------------v---------------+
-|           FastAPI             |
-|  - Custom Token Auth Layer    |
-|  - RBAC Enforcement           |
-|  - PostgreSQL DB              |
-|  - Docker SDK                 |
-+---------------+---------------+
-                |
-+---------------v---------------+
+|   Frontend (Vue 3 + Vite)     |
++-------------------------------+
+              |
++-------------------------------+
+|   Backend (Node.js/Express)   |
+| - API for container control   |
+| - Custom Auth & 2FA           |
+| - RBAC Enforcement            |
+| - System Resource Monitor     |
++-------------------------------+
+              |
++-------------------------------+
 |       Docker Engine API       |
-|    (Direct container ops)     |
-+---------------+---------------+
-                |
-+---------------v---------------+
-|  Honeypot Containers (SSH/HTTP/SMB/Custom) |
-+---------------+---------------+
-
+|  (Containers, Networks, Vols) |
 +-------------------------------+
-|   Shared Log Volume or Loki   |
+              |
 +-------------------------------+
-````
+|     Honeypot Containers       |
+|  (SSH, HTTP, SMB, Custom)     |
++-------------------------------+
+              |
++-------------------------------+
+|      Centralized Log Store    |
+|   + Future DF Tooling Layer   |
++-------------------------------+
+\`\`\`
 
 ---
 
-## 🧱 Tech Stack
+## Tech Stack
 
-| Layer             | Tool                          | Purpose                           |
-| ----------------- | ----------------------------- | --------------------------------- |
-| **Frontend**      | Vue 3 + Router + Pinia + Vite | SPA Dashboard                     |
-| **Backend**       | FastAPI                       | Core API logic                    |
-| **DB**            | PostgreSQL                    | Auth, RBAC, config, logs metadata |
-| **Orchestration** | Docker SDK                    | Direct container mgmt             |
-| **Auth**          | Custom Token System           | DIY token flow                    |
-| **RBAC**          | Custom Roles                  | Dev, DevOps, Admin, CySec         |
-| **Logging**       | Shared Vol or Loki            | Logs aggregator                   |
-| **Future**        | K8s, Terraform, CI/CD         | Infra as Code, pipelines          |
+| Layer             | Tooling                | Purpose                          |
+| ----------------- | ---------------------- | -------------------------------- |
+| **Frontend**      | Vue 3 + Vite           | Operator dashboard               |
+| **Backend**       | Node.js (Express)      | API server, orchestration logic  |
+| **Container Ops** | Docker SDK / Compose   | Programmatic container control   |
+| **Auth**          | Custom Token + 2FA     | Multi-user auth, RBAC            |
+| **Monitoring**    | Custom Resource Checks | CPU, RAM, Network traffic        |
+| **AI/DF**         | Optional Integration   | Log parsing, forensics           |
 
 ---
 
-## 🗂️ Directory Structure
+## Directory Structure
 
-```
+\`\`\`plaintext
 ./
 ├── LICENSE
+├── README.md
 ├── backend/
-│   ├── server/
-│   │   ├── Dockerfile
-│   │   ├── db/
-│   │   │   ├── datapase.py
-│   │   │   └── models.py
-│   │   ├── requirements.txt
-│   │   ├── routers/
-│   │   │   ├── auth.py
-│   │   │   └── docker.py
-│   │   ├── security/
-│   │   │   ├── phrases.txt
-│   │   │   └── token.py
-│   │   └── server.py
-│   └── venv/
-├── panel/
+│   ├── 2fa/
+│   │   ├── 2fa.js
+│   │   ├── codegen.js
+│   │   ├── crypto.js
+│   │   └── db_store.js
+│   ├── auth/
+│   │   └── auth.js
+│   ├── docker/
+│   │   ├── containers.js
+│   │   ├── docker.js
+│   │   └── spawner.js
+│   ├── factorio/
+│   │   ├── phrase.txt
+│   │   └── token.js
+│   ├── memory/
+│   │   ├── heap.js
+│   │   └── manager.js
+│   ├── routers/
+│   │   ├── auth.js
+│   │   ├── containers.js
+│   │   ├── honeypots.js
+│   │   ├── index.js
+│   │   ├── network.js
+│   │   └── settings/
+│   │       ├── settings.js
+│   │       ├── user.js
+│   │       └── webhooks.js
+│   ├── server.js
 │   ├── Dockerfile
-│   ├── index.html
-│   ├── package-lock.json
+│   ├── docker-compose.yml
 │   ├── package.json
+├── frontend/
+│   ├── Dockerfile
+│   ├── docker-compose.yml
+│   ├── index.html
 │   ├── public/
 │   │   └── vite.svg
 │   ├── src/
@@ -152,130 +168,91 @@ All containers are isolated, logs are centralized, network activity is traceable
 │   │   │   │   └── Input.vue
 │   │   │   └── global/
 │   │   │       └── Sidebar.vue
+│   │   ├── security/
+│   │   │   ├── Auth.js
+│   │   │   ├── GetAuthToken.js
+│   │   │   └── SetCookie.js
+│   │   ├── views/
+│   │   │   ├── Auth.vue
+│   │   │   ├── Index.vue
+│   │   │   └── NotFound.vue
 │   │   ├── main.js
-│   │   └── views/
-│   │       ├── Auth.vue
-│   │       └── Index.vue
-│   └── vite.config.js
+│   ├── vite.config.js
+│   ├── package.json
+│   ├── package-lock.json
 └── treex.md
-```
+\`\`\`
 
 ---
 
-## 🔐 Security Notes
+## Security Model
 
-* **Custom Token Auth:** Rotate, expire, hash in DB. Don’t hardcode.
-* **RBAC:** Enforce at every route. No silent fails.
-* **Docker SDK:** DO NOT expose `docker.sock` to the world.
-* **Host Ops:** Package installs & firewall edits run as root — use an isolated agent with tight comms.
-* **Container Hardening:** Run as non-root, use `seccomp`, `AppArmor`, drop caps.
-* **Logs:** Store off-site or in append-only mode.
-* **Access:** VPN or private admin subnet only.
-* **SSL:** Nginx or Caddy in front of FastAPI. No raw HTTP.
+- Custom Auth: Proprietary token generation and 2FA. Rotate keys regularly.
+- RBAC: Strict per-route access enforcement. Multi-role design.
+- Isolation: Honeypots run in locked-down containers with minimal privileges.
+- Network Controls: All inbound/outbound rules configurable via the dashboard.
+- Secrets: No hardcoded credentials. Use environment variables and secret stores.
+- Host Operations: Any privileged host-level operations are gated and logged.
 
 ---
 
-## ⚙️ Setup
+## Setup
 
 ### Prerequisites
 
-* Docker + Docker Compose
-* Python 3.11+
-* Node.js 20+
-* PostgreSQL running somewhere
+- Docker & Docker Compose
+- Node.js >= 20
 
-### Clone & Configure
+### Deploy
 
-```bash
-git clone https://github.com/yourusername/honeypot-farm.git
-cd honeypot-farm
-cp .env.example .env
-# Edit DB creds, tokens, secrets here!
-```
+1. Clone the repository:
+   \`\`\`bash
+   git clone https://github.com/yourusername/barnacle.git
+   cd barnacle
+   \`\`\`
 
-### Launch
+2. Build and start containers:
+   \`\`\`bash
+   docker-compose up --build -d
+   \`\`\`
 
-```bash
-docker-compose up --build -d
-```
+3. Access the frontend via your server’s IP or domain.
 
 ---
 
-## 🚀 Usage
+## Usage
 
-1. **Login**
-   Open `https://your.server.ip` → sign in with your admin token creds.
-
-2. **Deploy**
-   Pick a honeypot template — SSH, HTTP, SMB, custom — and spawn containers.
-
-3. **Monitor**
-   Inspect logs in real-time. Flag suspicious IPs. Export logs.
-
-4. **Block/Allow**
-   Add IP block rules or tweak firewall configs (⚠️ don’t brick yourself).
-
-5. **Host Ops**
-   Run safe package installs — nginx, fail2ban — carefully.
+1. Authenticate using your generated token and 2FA.
+2. Deploy honeypots or custom traps.
+3. Monitor live resource usage.
+4. Inspect logs and export for further analysis.
+5. Adjust firewall rules or manage host services as needed.
+6. Rotate tokens and manage user access securely.
 
 ---
 
-## 🗝️ Role-Based Access
+## Access Control
 
-| Role       | Capabilities                                        |
-| ---------- | --------------------------------------------------- |
-| **Dev**    | View traps, logs. Limited spawn. No firewall.       |
-| **DevOps** | Full container orchestration. Limited firewall ops. |
-| **Admin**  | Everything. Full orchestration + root ops.          |
-| **CySec**  | Logs, threat intel, forensics. No orchestration.    |
-
----
-
-## 🧩 Operational Best Practices
-
-✅ Rotate tokens & DB creds quarterly.
-✅ Keep FastAPI & frontend updated.
-✅ Don’t expose the `docker.sock` without a proxy.
-✅ Keep honeypots on an isolated network/subnet.
-✅ Regular off-site backups for logs.
-✅ Use CI/CD for rolling updates — no cowboy deploys.
-✅ Harden containers & drop all unnecessary capabilities.
-✅ Pen-test your panel as if you were the attacker.
+| Role   | Description                                      |
+|--------|--------------------------------------------------|
+| Admin  | Full orchestration, host ops, user management.   |
+| DevOps | Container orchestration, network adjustments.    |
+| Analyst| Log access, threat hunting, forensics only.      |
+| Viewer | Read-only, no deployment privileges.             |
 
 ---
 
-## 🗺️ Roadmap
+## Operational Guidelines
 
-* [ ] K8s integration for scale
-* [ ] Terraform modules for IAC
-* [ ] CI/CD pipeline (GitHub Actions / GitLab)
-* [ ] Loki/Promtail log pipelines
-* [ ] Slack/Discord/Matrix alert hooks
-* [ ] Automated IP intel feeds
-* [ ] Zero-trust agent for root ops
-* [ ] Proper audit logging & rollback
-* [ ] Dark mode, obviously
+- Use VPN or dedicated subnet for panel access.
+- Keep containers updated and rotate secrets.
+- Never expose Docker daemon directly.
+- Regularly back up logs to immutable storage.
+- Review audit logs and user actions.
+- Always test new honeypots in isolated environments.
 
 ---
 
-## 🤝 Contributing
+## License
 
-1. Fork the repo
-2. Make a feature branch (`git checkout -b feature/thing`)
-3. Commit changes, push
-4. PR with clear explanation
-5. Don’t break main. Don’t push raw secrets. Seriously.
-
----
-
-## 📄 License
-
-MIT — do your worst, just don’t blame me when shady folks fight back.
-
----
-
-## 🏴‍☠️ Final Word
-
-You break it, you fix it. You trap them, you learn. Keep your logs safe, your keys rotated, your containers isolated — and your curiosity ruthless.
-
-**Happy hunting.** 🐍✨
+MIT License — use it, break it, adapt it. Just don’t blame the author if you poke the bear and get mauled.

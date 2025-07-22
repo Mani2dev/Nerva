@@ -11,12 +11,18 @@ const routes = [
    {
     path: "/auth",
     name: "Auth",
-    component: () => import("../../views/Auth.vue"),
+    component: () => import("@/views/Auth.vue"),
+    meta: { hideSidebar: true },
   },
   {
     path: "/:pathMatch(.*)*",
     name: "NotFound",
-    component: () => import("../../views/NotFound.vue"),
+    component: () => import("@/views/NotFound.vue"),
+  },
+  {
+    path: "/containers",
+    name: "containers",
+    component: () => import("@/views/Containers.vue"),
   }
 ];
 
@@ -26,7 +32,8 @@ const router = createRouter({
 });
 
 
-router.beforeEach((to, from, next) => {
+/*
+ router.beforeEach((to, from, next) => {
 
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
 
@@ -39,6 +46,7 @@ router.beforeEach((to, from, next) => {
   }
 
 })
+ */
 
 
 

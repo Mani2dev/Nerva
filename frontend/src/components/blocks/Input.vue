@@ -27,15 +27,14 @@ const emit = defineEmits(['update:modelValue']) // Allow emitting
 <style scoped>
 input {
   position: relative;
-  border-radius: 22px;
-  border: solid 2px var(--border-color);
+  background: var(--color-input-bg);
+  border-radius: 0px;
+  border: solid .1px var(--border-color);
   width: 100%;
   transition: .3s ease;
   padding: 10px 10px;
 }
-input:focus {
-  border: solid 2px var(--border-color);
-}
+
 input::placeholder {
   opacity: 60%;
 }

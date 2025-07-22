@@ -9,33 +9,32 @@
 │   │   └── db_store.js
 │   ├── Dockerfile
 │   ├── auth/
-│   │   └── auth.js
+│   ├── build/
+│   │   ├── Dockerfile
+│   │   └── docker-compose.yml
 │   ├── docker/
 │   │   ├── containers.js
 │   │   ├── docker.js
 │   │   └── spawner.js
-│   ├── docker-compose.yml
 │   ├── factorio/
 │   │   ├── phrase.txt
 │   │   └── token.js
+│   ├── image/
 │   ├── memory/
 │   │   ├── heap.js
 │   │   └── manager.js
+│   ├── package-lock.json
 │   ├── package.json
 │   ├── routers/
 │   │   ├── auth.js
-│   │   ├── containers.js
-│   │   ├── honeypots.js
-│   │   ├── index.js
-│   │   ├── network.js
 │   │   └── settings/
 │   │       ├── settings.js
 │   │       ├── user.js
 │   │       └── webhooks.js
 │   └── server.js
+├── docker-compose.yaml
 ├── frontend/
 │   ├── Dockerfile
-│   ├── docker-compose.yml
 │   ├── index.html
 │   ├── package-lock.json
 │   ├── package.json
@@ -65,4 +64,6 @@
 │   │       ├── Index.vue
 │   │       └── NotFound.vue
 │   └── vite.config.js
+├── infra/
+│   └── Caddyfile/
 └── treex.md

@@ -19,10 +19,11 @@ const emit = defineEmits(['update:modelValue']) // Allow emitting
 <style scoped>
 button {
   position: relative;
-  border-radius: 22px;
+  border-radius: 0px;
   width: 100%;
   transition: .3s ease;
   padding: 10px 10px;
   outline: none;
+
 }
 </style>

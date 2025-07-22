@@ -7,7 +7,13 @@ export default defineConfig({
   resolve: {
     alias: {
       '~': path.resolve(__dirname, 'src'),
-      '@': path.resolve(__dirname, 'src'), // both work if you want!
+      '@': path.resolve(__dirname, 'src'),
     },
   },
+  build: {
+    outDir: 'dist',
+  },
+  server: {
+    historyApiFallback: true
+  }
 })
