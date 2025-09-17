@@ -1,0 +1,4 @@
+users.db
+node_modules
+.env
+.secret

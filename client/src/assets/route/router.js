@@ -1,39 +1,64 @@
+// router.js
 import { createRouter, createWebHistory } from "vue-router";
+import { requestWhoami } from "@/utils/requestAuth.js"
+
+let cachedAuth = { ok: false, ts: 0, user: null };
+async function checkAuth() {
+  const now = Date.now();
+  if (now - cachedAuth.ts < 5000) return cachedAuth.ok; // 5s soft cache
+  const res = await requestWhoami();
+  cachedAuth = { ok: !!(res.ok && res.data?.ok), ts: now, user: res.data?.user || null };
+  return cachedAuth.ok;
+}
 
 const routes = [
   {
-    name: "home",
-    path: "/",
-    component: () => import("@/view/Home.vue"),
-    meta: { requiresAuth: true }, // <-- protected
+    path: "/auth",
+    children: [
+      { path: "", redirect: "/auth/login" }, // <— THIS fixes /auth blank page
+      {
+        path: "login",
+        component: () => import("@/pages/auth/Auth.vue"),
+        meta: { chrome: false },
+      },
+      {
+        path: "forgot",
+        component: () => import("@/pages/auth/Forgot.vue"),
+        meta: { chrome: false },
+      },
+    ],
   },
   {
-    name: "auth",
-    path: "/auth",
-    component: () => import("@/view/Auth.vue"),
-    meta: { public: true }, // optional, just for clarity
+    path: "/",
+    children: [
+      { path: "", redirect: "/dashboard" },
+      { path: "dashboard", component: () => import("@/pages/Dashboard.vue") },
+      { path: "honeypots", component: () => import("@/pages/Honeypots.vue") },
+      { path: "traffic", component: () => import("@/pages/Traffic.vue") },
+      { path: "logs", component: () => import("@/pages/Logs.vue") },
+      { path: "incidents", component: () => import("@/pages/Incidents.vue") },
+      { path: "phishing", component: () => import("@/pages/Phishing.vue") },
+      { path: "health", component: () => import("@/pages/Health.vue") },
+      { path: "intel", component: () => import("@/pages/ThreatIntel.vue") },
+      { path: "rules", component: () => import("@/pages/Rules.vue") },
+      { path: "playbooks", component: () => import("@/pages/Playbooks.vue") },
+      { path: "reports", component: () => import("@/pages/Reports.vue") },
+      { path: "settings", component: () => import("@/pages/Settings.vue") },
+      { path: ":pathMatch(.*)*", redirect: "/dashboard" },
+    ],
   },
 ];
 
-function isAuthed() {
-  // dumb example: swap to your real check (Pinia store, cookie, etc.)
-  return !!localStorage.getItem("token");
-}
+const router = createRouter({ history: createWebHistory(), routes });
 
-const router = createRouter({
-  history: createWebHistory(),
-  routes,
-});
-
-// Global guard
-router.beforeEach((to) => {
-  if (to.meta.requiresAuth && !isAuthed()) {
-    return { name: "auth", query: { redirect: to.fullPath } };
+router.beforeEach(async (to, _from, next) => {
+  const needsAuth = !to.matched.some((r) => r.meta.chrome === false);
+  if (!needsAuth) {
+    if (to.path.startsWith("/auth") && await checkAuth()) return next("/dashboard");
+    return next();
   }
-  if (to.name === "auth" && isAuthed()) {
-    return { path: to.query.redirect || "/" };
-  }
-  // otherwise allow
+  if (await checkAuth()) return next();
+  next("/auth/login");
 });
 
 export default router;

@@ -1,38 +1,27 @@
 <script setup>
-defineProps({
-  value: String,
-  type: { type: String, default: 'text' },
-  style: String,
-  placeholder: String,
-  name: String,
-  id: String,
-  action: Function
-});
+const model = defineModel({ type: [String, Number], default: '' }) // Vue 3.4+
 
-defineEmits(['update:value']);
+const props = defineProps({
+  type: { type: String, default: 'text' },
+  id: String,
+  name: String,
+  placeholder: String,
+  autocomplete: String
+})
 </script>
 
 <template>
   <input
-    :value="value"
+    :id="id"
+    :name="name"
     :type="type"
     :placeholder="placeholder"
-    :style="style"
-    :name="name"
-    :id="id"
-    :class="style"
-    @input="$emit('update:value', $event.target.value)"
-    @click="action && action($event)"
+    :autocomplete="autocomplete"
+    v-model="model"
+    class="input"
   />
 </template>
 
 <style scoped>
-
-    input {
-        outline: none;
-        border: none;
-        width: 100%;
-        font-size: var(--font-nm);
-    }
-
+.input { outline: none; border: none; width: 100%; font-size: var(--font-nm); }
 </style>

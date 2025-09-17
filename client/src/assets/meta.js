@@ -1,5 +1,5 @@
 const bot = {
-    name: 'Lili'
+    name: 'Ganji'
 }
 
 

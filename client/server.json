@@ -1,0 +1,16 @@
+{
+  "server_name": "My S42 Box",
+  "domain": {
+    "host": "mysuperdomain.com",
+    "port": 80,
+    "ssl": true,
+    "subdomains": {
+       "dev": { "name": "dev", "port": 2020 }, 
+       "prod": { "name": "prod", "port": 80 }, 
+       "web": { "name": "web", "port": 2020 }, 
+       "scripts": { "name": "scripts", "port": 2020 }, 
+       "private": { "name": "private", "port": 2020 }, 
+       "robots": { "name": "robots", "port": 2020 }
+    }
+  }
+}
